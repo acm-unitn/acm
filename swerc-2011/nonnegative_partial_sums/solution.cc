@@ -50,29 +50,18 @@ int result(list<int> l) { // actual test case solving
 int main(int argc, char**argv) {
   // IO management, input parsing, iterating over test cases
 
-  fstream in;
-  if (argc < 2) {
-    cout << "Need 1 command line paramenter: file to read input from.\n";
-    return 1;
-  }
-  in.open(argv[1], ios::in);
-  if (in.fail()) {
-    cerr << "Bad file name\n";
-    return 1;
-  }
-  
   int n;
   while(1){
-    in >> n;
+    cin >> n;
     if (n == 0) break;
     list<int> l;
     for (int i = 0; i < n; i++){
       int a;
-      in >> a;
+      cin >> a;
       l.push_back(a);
     }
-    printl(l);
-    cout << " > " << result(l) << endl;
+    //printl(l);
+    cout << result(l) << endl;
   }
   return 0;
 }
