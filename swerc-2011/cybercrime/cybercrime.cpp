@@ -188,14 +188,8 @@ int bin_search_fine(vector<ciamb_rev> *lista, int inizio, int fine,double val)
 int search_su_y(vector<ciamb_rev> *lista, double y1, double y2, vector<ciamb_rev> *elementi=NULL)
 {
   int inizio, fine;
-  /*printf("cerco sulla y, intervallo %lf %lf\n",y1,y2);
-  printf("lista valori\n");
-  for (int i=0; i<(int)(*lista).size();  i++)
-    printf("(%lf %lf) ",(*lista)[i].first,(*lista)[i].second);
-    printf("\n");*/
   inizio = bin_search_inizio(lista,0,(int)(*lista).size()-1,y1);
   fine = bin_search_fine(lista,0,(int)(*lista).size()-1,y2);
-  //printf("inizio %d fine %d\n",inizio,fine);
   if (elementi != NULL)
     for (int i=inizio+1; i<=fine-1; i++)
       (*elementi).push_back((*lista)[i]);
@@ -207,7 +201,6 @@ int my_search(double x1, double x2, double y1, double y2, bool solo_quanti, vect
   int quanti;
   tree *nodo;
   tree *radice = db;
-  //printf("cerco in intervallo x (%lf,%lf) y (%lf,%lf)\n",x1,x2,y1,y2);
   //trovo radice che ha nel sottoalbero sinistro x1 e nel destro x2
   while (radice!=NULL && !(radice->val.first > x1 && radice->val.first < x2))
   {
@@ -218,30 +211,25 @@ int my_search(double x1, double x2, double y1, double y2, bool solo_quanti, vect
   }
   if (radice == NULL)
   {
-    //printf("nell'intervallo delle x cercato non casca neanche un nodo\n");
     return 0; //nell'intervallo delle x cercato non casca neanche un nodo
   }
-  //printf("la radice è: %lf %lf\n",radice->val.first,radice->val.second);
   quanti = 0;
   if ((radice->val.second > y1)&& (radice->val.second < y2))
   {
-    //printf("la radice è nell'intervallo\n");
+    //la radice è nell'intervallo
     if (!solo_quanti)
       (*elementi).push_back(radice->val);
     quanti++;
   }
   //visito a sinistra
   nodo = radice->sx;
-  //printf("visito a sinistra\n");
   while (nodo != NULL)
   {
-    //printf("visito ciambella %lf %lf\n",nodo->val.first,nodo->val.second);
     if (nodo->val.first > x1) //vado a sinistra
     {
-      //printf("vado a sinistra\n");
       if ((nodo->val.second > y1)&& (nodo->val.second < y2))
       {
-	//printf("la ciambella visitata è nell'intervallo\n");
+	//la ciambella visitata è nell'intervallo
 	if (!solo_quanti)
 	  (*elementi).push_back(nodo->val);
 	quanti++;
@@ -258,26 +246,20 @@ int my_search(double x1, double x2, double y1, double y2, bool solo_quanti, vect
     }
     else //vado a destra
     {
-      //printf("vado a destra\n");
       nodo = nodo->dx;
     }
   }
-  //printf("quanti %d\n",quanti);
   //visito a destra;
   nodo = radice->dx;
-  //printf("visito a destra\n");
-  fflush(stdout);
   while (nodo != NULL)
   {
-    //printf("visito ciambella %lf %lf\n",nodo->val.first,nodo->val.second);
     if (nodo->val.first < x2) //vado a destra
     {
-      //printf("vado a destra\n");
       if ((nodo->val.second > y1)&& (nodo->val.second < y2))
       {
 	if (!solo_quanti)
 	  (*elementi).push_back(nodo->val);
-	//printf("la ciambella visitata è nell'intervallo\n");
+	//la ciambella visitata è nell'intervallo
 	quanti++;
       }
       if (nodo->sx != NULL)
@@ -292,11 +274,9 @@ int my_search(double x1, double x2, double y1, double y2, bool solo_quanti, vect
     }
     else //vado a sinistra
     {
-      //printf("vado a sinistra\n");
       nodo = nodo->sx;
     }
   }
-  //printf("quanti %d\n",quanti);
   return quanti;
 }
 
@@ -310,8 +290,7 @@ ciambella cerca_ciambella(ciambella val,double quadrato)
   x2 = val.first + quadrato/2.0;
   y1 = val.second - quadrato/2.0;
   y2 = val.second + quadrato/2.0;
-  //printf("TROVATO!!! è nell'intevallo x (%lf %lf) y (%lf %lf)\n",x1,x2,y1,y2);
-  my_search(x1,x2,y1,y2,false,&elementi);
+  my_search(x1,x2,y1,y2,false,&elementi); //ottengo gli elementi nell'intervallo
   min = abs(val.first-elementi[0].first) + abs(val.second-elementi[0].second);
   out = elementi[0];
   for (int i=1; i<(int) elementi.size(); i++)
@@ -320,7 +299,6 @@ ciambella cerca_ciambella(ciambella val,double quadrato)
       min = abs(val.first-elementi[i].first) + abs(val.second-elementi[i].second);
       out = elementi[i];
     }
-  //printf(">>>>>>> la più simile per %lf %lf è %lf %lf\n",val.first,val.second,out.first,out.second);
   return out;
 }
 
@@ -360,16 +338,12 @@ ciambella trova_simile(ciambella val)
     if (quanti > 0 && quanti <= 4)
       return cerca_ciambella(val,quadrato_esterno);
   }
-  //printf("quadrato esterno: %lf\n",quadrato_esterno);
-  //printf("quadrato interno: %lf\n",quadrato_interno);
   //modifico dimensione del quadrato finche
-  //non contiene quattro o meno ciambella
+  //non contiene quattro o meno ciambelle
   quadrato = (quadrato_esterno + quadrato_interno) / 2.0;
   quanti = my_search(x1,x2,y1,y2,true);
   while (!(quanti >= 1 && quanti <= 4))
   {
-    //printf("quadrato esterno: %lf\n",quadrato_esterno);
-    //printf("quadrato interno: %lf\n",quadrato_interno);
     if (quanti > 1)
       quadrato_esterno = quadrato;
     else if (quanti == 0)
@@ -409,15 +383,11 @@ int main()
     }
     for (int i=0; i<q; i++)
     {
-      //print_tree(db,0);
-      //printf("\n");
-      //printf("Trova simile per ciambella %lf %lf\n",dati[i].first,dati[i].second);
       c = trova_simile(dati[i]);
       cf = c.first * pow(2,0.5)/2.0 + c.second * pow(2,0.5)/2.0;
       cs = c.first * pow(2,0.5)/2.0 * -1.0 + c.second * pow(2,0.5)/2.0;
       df = dati[i].first * pow(2,0.5)/2.0 + dati[i].second * pow(2,0.5)/2.0;
       ds = dati[i].first * pow(2,0.5)/2.0 * -1.0 + dati[i].second * pow(2,0.5)/2.0;
-      //printf(">>>>>>> la più simile per %lf %lf è %lf %lf\n",dati[i].first,dati[i].second,c.first,c.second);
       output[i] = abs(cf-df) + abs(cs-ds);
     }
     for (int i=0; i<q; i++)
