@@ -1,0 +1,15 @@
+2
+6
+buy 10 shares at 100
+sell 1 shares at 120
+sell 20 shares at 110
+buy 30 shares at 110
+sell 10 shares at 99
+buy 1 shares at 120
+6
+sell 10 shares at 100
+buy 1 shares at 80
+buy 20 shares at 90
+sell 30 shares at 90
+buy 10 shares at 101
+sell 1 shares at 80
