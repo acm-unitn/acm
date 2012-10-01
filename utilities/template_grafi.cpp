@@ -2,7 +2,8 @@
 #include <vector>
 #include <utility>
 #include <queue>
-
+#include "template_grafi.h"
+extern vector<node> graph;
 #define DEBUG
 #ifdef DEBUG
 #define print(...) fprintf(stderr, __VA_ARGS__)
@@ -25,7 +26,7 @@ struct node {
   }
 };
 
-vector<node> graph;
+//vector<node> graph;
 
 void dfs(int node)
 // Only visits graph from here. Will not see unreachable nodes!
