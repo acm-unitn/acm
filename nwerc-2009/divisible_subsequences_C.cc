@@ -7,38 +7,39 @@
 #else
 #define print(...)
 #endif
+#define lint long long
+
 
 #define MAXLEN 50000
 
-int arr[MAXLEN+1];
-int sums[MAXLEN+2];
-int n, d;
+
+//lint arr[MAXLEN+1];
+lint sums[MAXLEN+2];
+lint n, d;
 
 int cmp(const void *a, const void *b){
-  const int *ia = (const int *)a;
-  const int *ib = (const int *)b;
+  const lint *ia = (const lint *)a;
+  const lint *ib = (const lint *)b;
   return *ia  - *ib;
 }
 
-int resolve(){
-  for (int i=0; i<=n; i++){
-    print("%i ", sums[i]);
+lint resolve(){
+  for (lint i=0; i<=n; i++){
+    print("%lli ", sums[i]);
   }
   print("\n");
-  qsort(sums, n+1, sizeof(int), cmp);
+  qsort(sums, n+1, sizeof(lint), cmp);
   sums[n+1] = -1;
-  for (int i=0; i<=n+1; i++){
-    print("%i ", sums[i]);
+  for (lint i=0; i<=n+1; i++){
+    print("%lli ", sums[i]);
   }
   print("\n");
-  int res = 0;
-  int counter = 0;
-  int last = -1;
-  for (int i=0; i<=n+1; i++){
-    if(sums[i] != last){
+  lint res = 0;
+  lint counter = 1;
+  for (lint i=1; i<=n+1; i++){
+    if(sums[i] != sums[i-1]){
       res += (counter * (counter-1))/2;
-      print ("  %i occorrenze di %i: res= %i\n", counter, last, res);
-      last = sums[i];
+      print ("  %lli occorrenze di %lli: res= %lli\n", counter, sums[i-1], res);
       counter = 1;
     }
     else {
@@ -50,19 +51,19 @@ int resolve(){
 }
 
 int main(){
-  int c;
-  scanf("%i", &c);
-  print("c = %i\n\n", c);
-  for(int i=0; i<c; i++){
-    scanf("%i %i", &d, &n);
-    print("n %i; d %i;\n", n, d);
+  lint c;
+  scanf("%lli", &c);
+  print("c = %lli\n\n", c);
+  for(lint i=0; i<c; i++){
+    scanf("%lli %lli", &d, &n);
+    print("n %lli; d %lli;\n", n, d);
     sums[0] = 0;
-    for(int j=1; j<=n; j++){
-      int tmp;
-      scanf("%i", &tmp);
+    for(lint j=1; j<=n; j++){
+      lint tmp;
+      scanf("%lli", &tmp);
       sums[j] = (sums[j-1] + tmp) % d;
     }
-    int res = resolve();
-    printf("%i\n", res);
+    lint res = resolve();
+    printf("%lli\n", res);
   }
 }
