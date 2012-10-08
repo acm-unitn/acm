@@ -4,6 +4,7 @@
 #include <queue>
 #include "template_grafi.h"
 extern vector<node> graph;
+extern long long int [][] mgraph;
 #define DEBUG
 #ifdef DEBUG
 #define print(...) fprintf(stderr, __VA_ARGS__)
@@ -91,8 +92,7 @@ void full_bfs(){
     bfs(i);
 }
 
-
-int main()
+int tree_test()
 {
   bool archi=true; // da non copiare
   int n, m;
@@ -110,7 +110,7 @@ int main()
       graph[a].add_adj(b,w);
     }
   }
-  else //parsa input con matrice di 0 1
+  else //parsa input con matrice di pesi positivi
   {
     for (int i=0; i<n; i++)
     {
