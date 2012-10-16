@@ -38,9 +38,10 @@ void visita(int nodo, int padre)
     figlio = grafo[nodo].vicini[i];
     if (figlio != padre)
     {
-      v = grafo[nodo].volte-grafo[nodo].costi[figlio].second;
-      c = grafo[nodo].totale-grafo[nodo].costi[figlio].first+
-        v * (lint)grafo[nodo].pesi[i];
+      v = grafo[nodo].volte-grafo[figlio].volte;
+      c = grafo[nodo].totale-(grafo[figlio].totale+
+                              grafo[figlio].volte * (lint)grafo[nodo].pesi[i])
+        +v * (lint)grafo[nodo].pesi[i];
       grafo[figlio].volte += v;
       grafo[figlio].totale += c;
       visita(figlio,nodo);
@@ -69,7 +70,6 @@ pair<lint,int> costo(int nodo, int padre)
       v = tmp.second;
       c = tmp.first + v*(lint)grafo[nodo].pesi[i] ;
       //print("nodo %d vicino %d aggiungo %lld\n",nodo,vicino,c);
-      grafo[nodo].costi[vicino] = pair<lint,int>(c,v);
       grafo[nodo].totale += c;
       grafo[nodo].volte += v;
     }
@@ -92,7 +92,6 @@ int main()
     {
       grafo[i].vicini.erase(grafo[i].vicini.begin(),grafo[i].vicini.end());
       grafo[i].pesi.erase(grafo[i].pesi.begin(),grafo[i].pesi.end());
-      grafo[i].costi.erase(grafo[i].costi.begin(),grafo[i].costi.end());
       grafo[i].totale = 0;
       grafo[i].volte = 0;
     }
