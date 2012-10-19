@@ -71,9 +71,9 @@ int bfs_walk(int source, int dest, stack<int>* path)
     node = dest;
     while (node != source) {
       path->push(node);
-      node = previous[node];
       if (weights[previous[node]][node] < min)
         min = weights[previous[node]][node];
+      node = previous[node];
     }
     path->push(source);
     return min;
