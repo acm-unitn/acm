@@ -29,16 +29,18 @@ int main() {
     for (int i=0; i<nstep; i++) {
       a = inizio + step * i;
       b = inizio + step * (i+1);
+      //printf("a %Lf b %LF\n",a,b);
       long double na = (a - pi / 2) / pi;
       long double nb = (b - pi / 2) / pi;
-      if (fabs(floor(na) - floor(nb)) < 10e-10) {
+      //printf("na=%Lf nb=%Lf %Lf %Lf\n", na, nb, floor(na), floor(nb));
+      //if (fabs(floor(na) - floor(nb)) < 10e-10) {
         long double fa = f(a);
         long double fb = f(b);
         //printf("fa=%Lf fb=%Lf %Lf %Lf\n", fa, fb, na, nb);
         if (fa * fb < 0 || fabs(fa) < 10e-10 || fabs(fb) < 10e-10) {
           result += 1;
         }
-      }
+      //}
     }
     printf("%lld\n", result);
   }
