@@ -107,7 +107,10 @@ int max_flow(int source, int sink)
   for (uint i=0; i<graph[source].adjs.size(); i++)
   {
     int adj = graph[source].adjs[i];
-    flow += weights[adj][source];
+    //versione senza archi entranti nella sorgente
+    //flow += weights[adj][source];
+    //versione con archi entranti nella sorgente
+    flow += graph[source].weights[i] - weights[source][adj];
   }
   return flow;
 }
