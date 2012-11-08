@@ -133,6 +133,7 @@ int main()
     printf("Case %d\n",k+1);
     for (int i=0; i<q; i++)
       printf("%d\n",query[i][2]);
+    printf("\n");
   }
   return 0;
 }
