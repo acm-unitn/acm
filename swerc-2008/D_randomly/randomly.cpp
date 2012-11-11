@@ -82,7 +82,7 @@ int main()
       }
       scanf("\n");
     }
-    printf("Case %d\n",z);
+    printf("Case %d\n",z+1);
     /*
     for (int i=0; i<n; i++)
     {
