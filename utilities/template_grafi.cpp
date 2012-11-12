@@ -2,9 +2,7 @@
 #include <vector>
 #include <utility>
 #include <queue>
-#include "template_grafi.h"
-extern vector<node> graph;
-extern long long int [][] mgraph;
+#include <vector>
 #define DEBUG
 #ifdef DEBUG
 #define print(...) fprintf(stderr, __VA_ARGS__)
@@ -13,6 +11,7 @@ extern long long int [][] mgraph;
 #endif
 
 #define uint unsigned int
+#define MAX_N 10000
 
 using namespace std;
 
@@ -27,7 +26,8 @@ struct node {
   }
 };
 
-//vector<node> graph;
+vector<node> graph;
+long long int mgraph[MAX_N][MAX_N];
 
 void dfs(int node)
 // Only visits graph from here. Will not see unreachable nodes!
